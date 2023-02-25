@@ -7,6 +7,7 @@ import 'package:sillicon_films/src/providers/info_provider.dart';
 final mainProvider = Provider((_)=> InfoProvider());
 
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
