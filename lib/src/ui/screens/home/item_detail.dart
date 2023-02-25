@@ -10,6 +10,7 @@ class ItemDetail extends StatefulWidget {
 class _ItemDetailState extends State<ItemDetail> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+    );
   }
 }
