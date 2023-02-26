@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 class ItemInfo{
   String? posterPath;
   late double popularity;
@@ -50,3 +52,19 @@ class ItemInfo{
   }
 }
 
+
+final _seriesList = Provider((ref)=>SeriesRepository);
+
+    class SeriesRepository {
+  SeriesRepository(
+      this.ref);
+
+  final Ref ref;
+
+  Future<List<ItemInfo>> fetchSeries() async{
+    List<ItemInfo> lista = [];
+
+    return lista;
+  }
+
+    }
