@@ -7,12 +7,7 @@ import 'package:sillicon_films/src/connection/api_client.dart';
 
 final repositoryGenreProvider = Provider(SeriesGenreRepository.new);
 
-//SeriesGenreRepository seriesGenreRepository(ref)=> SeriesGenreRepository(ref);
-
 class SeriesGenreRepository extends StateNotifier<List<Genre>>{
-  //static final seriesGenreProvider = StateNotifierProvider<SeriesGenreRepository, List<Genre>>((ref)=>SeriesGenreRepository(ref));
- // static final seriesGenreProvider = ChangeNotifierProvider((ref)=>SeriesGenreRepository(ref));
-  //static final seriesGenreProvider = StateNotifierProvider<SeriesGenreRepository, List<Genre>>((ref)=>SeriesGenreRepository(ref));
 
   final Ref ref;
   late List<Genre> genreList = [];
@@ -21,20 +16,6 @@ class SeriesGenreRepository extends StateNotifier<List<Genre>>{
   List get genreListGet{
     return genreList;
   }
-
-  // List<Genre> genreSelected = [];
-  //
-  // addGenreSelected(Genre genre){
-  //   genreSelected.add(genre);
-  // }
-  //
-  // bool isGenreSelected(Genre genre){
-  //   if(genreSelected.contains(genre)){
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
 
 
   String getGenreNames(List<int> list){
@@ -64,7 +45,6 @@ class SeriesGenreRepository extends StateNotifier<List<Genre>>{
       list.add(Genre.fromJson(genre));
     });
     genreList = list;
-    print("obtener los genres");
     return list;
 
 }

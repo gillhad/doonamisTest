@@ -23,7 +23,6 @@ class ListaSeries extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print(ref.watch(seriesRepository).lista.length);
     ref.listen(_seriesOptions, (previous, next) async{
       _series = ref.watch(seriesRepository).lista;
       if(_series!.length>10) {

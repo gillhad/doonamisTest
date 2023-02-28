@@ -25,12 +25,10 @@ class SeriesCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print("el lenght");
     _genreList = ref.watch(repositoryGenreProvider).genreList;
 
     return GestureDetector(
       onTap: ()async{
-        print("naviagate");
         Navigator.pushNamed(context, NavigationRoutes.detail, arguments: DetailArguments(serie:  await ref.watch(seriesRepository).fetchItem(itemInfo.id.toString(),CancelToken())));
       },
       child: Stack(
@@ -97,7 +95,6 @@ getGenre(List<dynamic> list){
     List<Genre> genreValue = [];
     if(_genreList!.isNotEmpty) {
       list.forEach((element) {
-        print(element);
         genreValue.add(_genreList!.singleWhere((id) => element == id.id));
       });
     }
@@ -105,8 +102,6 @@ getGenre(List<dynamic> list){
     genreValue.forEach((element) {
       concatenate = concatenate + element.name;
     });
-    print("concatenate");
-    print(concatenate);
     return concatenate;
 }
 }

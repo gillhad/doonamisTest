@@ -14,7 +14,6 @@ class SeriesItem {
   late String overview;
   late String firstAirDate;
   late List<dynamic> genreIds;
-  late List<Genre>? genreList;
   late List<dynamic> originCountry;
   late String originalLanguage;
   late int voteCount;
@@ -30,7 +29,6 @@ class SeriesItem {
       required this.overview,
       required this.firstAirDate,
       required this.genreIds,
-        this.genreList,
       required this.originCountry,
       required this.originalLanguage,
       required this.voteCount,
@@ -38,13 +36,6 @@ class SeriesItem {
       required this.originalName});
 
   SeriesItem.fromJson(Map<String, dynamic> json) {
-    List<Genre> genres = [];
-    //
-    // var jsonGenres = json["genre_ids"];
-    // jsonGenres.forEach((genre){
-    //   genres.add(Genre.fromJson(genre));
-    // });
-    //
 
     posterPath = json["poster_path"];
     popularity = json["popularity"];
@@ -54,7 +45,6 @@ class SeriesItem {
     print("a por los genres");
     genreIds = json["genre_ids"];
     print("genres correctos");
-    genreList = genres;
     overview = json["overview"];
     firstAirDate = json["first_air_date"];
     originCountry = json["origin_country"];
@@ -85,6 +75,78 @@ class SeriesItem {
   }
 }
 
+///Clase con la info detallada de cada serie
+class SerieDetail{
+late int id;
+String? name;
+String? nextEpisode;
+late List<CreatedBy> createdBy;
+late List<Genre> genreList;
+ bool? inProduction;
+ List<String>? langauges;
+ String? lastAirDate;
+ String? lastEpisodeToAir;
+ int? numberEpisodes;
+ int? numberSeasons;
+ String? originalLanguage;
+ String? originalName;
+ String? overview;
+ double? popularity;
+ double? voteAverage;
+ int? voteCount;
+ String? posterPath;
+
+
+SerieDetail.fromJson(Map<String,dynamic> json){
+  List<Genre> genres = [];
+  List<CreatedBy> createdList = [];
+
+  var jsonGenres = json["genres"];
+  if(jsonGenres!=null) {
+    jsonGenres.forEach((genre) {
+      genres.add(Genre.fromJson(genre));
+    });
+  }
+
+  var jsonCreated = json["created_by"];
+  if(jsonCreated!=null) {
+    jsonCreated.forEach((created) {
+      createdList.add(CreatedBy.fromJson(created));
+    });
+  }
+
+print( json["last_episode_to_air"]);
+  id = json["id"];
+  name = json["name"];
+  nextEpisode = json["next_episode"];
+  createdBy = createdList;
+  genreList = genres;
+  inProduction = json["in_production"];
+  langauges = json["langauges"];
+  lastAirDate = json["last_air_date"];
+  lastEpisodeToAir = json["last_episode_to_air"]["name"];
+  print(json["number_of_episodes"]);
+  numberEpisodes = json["number_of_episodes"];
+  numberSeasons = json["number_of_seasons"];
+  originalName = json["original_name"];
+  originalLanguage = json["original_language"];
+  overview = json["overview"];
+  popularity = json["popularity"];
+  voteAverage = json["vote_average"];
+voteCount = json["vote_count"];
+posterPath = json["poster_path"];
+}
+}
+
+class CreatedBy{
+  late int id;
+  late String name;
+
+  CreatedBy.fromJson(Map<String,dynamic> json){
+    id = json["id"];
+    name = json["name"];
+  }
+}
 
 
 class SeriesListResponse extends StateNotifier<List<Genre>>{
@@ -126,16 +188,14 @@ class SeriesRepository extends StateNotifier<List<SeriesItem>>{
   }
 
   ///Get item detail by ID
-  Future<SeriesItem> fetchItem(String id,CancelToken cancelToken)async{
-    if(_seriesList.containsKey(id)){
-      return _seriesList[id]!;
-    }
+  Future<SerieDetail> fetchItem(String id,CancelToken cancelToken)async{
+
 
     final _response = await ApiClient.get("/tv/$id");
     String responseString = _response.toString();
     print(_response);
     final json = jsonDecode(responseString);
-    return SeriesItem.fromJson(json);
+    return SerieDetail.fromJson(json);
   }
 
 }

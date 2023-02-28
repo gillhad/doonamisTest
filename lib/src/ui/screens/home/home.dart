@@ -42,7 +42,6 @@ List<Genre> optionsSelecte = [];
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(genreOptions).value;
      ref.listen(genreOptions, (previous, next) async{
-       print("ei listen");
        _genreList = ref.watch(repositoryGenreProvider).genreList;
 
      });
