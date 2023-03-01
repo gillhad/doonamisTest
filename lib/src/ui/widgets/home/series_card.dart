@@ -29,7 +29,8 @@ class SeriesCard extends ConsumerWidget {
 
     return GestureDetector(
       onTap: ()async{
-        Navigator.pushNamed(context, NavigationRoutes.detail, arguments: DetailArguments(serie:  await ref.watch(seriesRepository).fetchItem(itemInfo.id.toString(),CancelToken())));
+        Navigator.pushNamed(context, NavigationRoutes.detail,
+            arguments: DetailArguments(serie:  await ref.watch(seriesRepository).fetchItem(itemInfo.id.toString(),CancelToken())));
       },
       child: Stack(
         children: [
@@ -59,7 +60,9 @@ class SeriesCard extends ConsumerWidget {
                         width: MediaQuery.of(context).size.width*.6,
                         child: Text(itemInfo.name,style: AppStyles.textTheme.titleMedium,)),
                     SizedBox(height: 5,),
-                    ref.watch(repositoryGenreProvider).genreList.isNotEmpty ? Text(getGenre(itemInfo.genreIds)) : Container(),
+                    ref.watch(repositoryGenreProvider).genreList.isNotEmpty ? Container(
+                        width: MediaQuery.of(context).size.width*.6,
+                        child: Text(getGenre(itemInfo.genreIds))) : Container(),
                     Container(
                         width: MediaQuery.of(context).size.width*.6,
                         child: Text(itemInfo.overview, overflow: TextOverflow.ellipsis,maxLines: 2,)),

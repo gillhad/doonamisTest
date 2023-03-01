@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sillicon_films/src/connection/api_client.dart';
 import 'package:sillicon_films/src/models/movie_genre.dart';
@@ -146,7 +147,7 @@ class CreatedBy{
 }
 
 
-class SeriesListResponse extends StateNotifier<List<Genre>>{
+class SeriesListResponse extends StateNotifier<List<SeriesItem>>{
    late int totalCount;
    late List<SeriesItem> seriesList;
   SeriesListResponse({required this.totalCount,required this.seriesList}):super([]);
@@ -158,29 +159,58 @@ class SeriesListResponse extends StateNotifier<List<Genre>>{
 
 }
 
-final seriesRepository = Provider(SeriesRepository.new);
+ final seriesRepository = Provider(SeriesRepository.new);
 
-class SeriesRepository extends StateNotifier<List<SeriesItem>>{
-  SeriesRepository(this.ref):super([]);
+class SeriesRepository extends StateNotifier<int>{
+
+  SeriesRepository(this.ref):super(0);
+
+  static final repoState = StateProvider((ref) {
+
+    return SeriesRepository(ref).lista.length;
+  });
 
   final Ref ref;
   final _seriesList = <String, SeriesItem>{};
   List<SeriesItem> lista = [];
   int currentPage = 1;
+  bool _isLoading = false;
 
+  getList(){
+    lista.clear();
+    return lista;
+  }
 
   //Get new discoveries
-  Future<List<SeriesItem>> fetchSeries(CancelToken cancelToken, {String? pagination}) async {
-    final _response = await ApiClient.get("/tv/popular",queryParameter: {"page":pagination}, cancelToken: cancelToken);
-    final _responseString= _response.toString();
-    final json = jsonDecode(_responseString);
-    json["results"].forEach((serie) {
-      lista.add(SeriesItem.fromJson(serie));
-    });
-    if(currentPage<json["total_pages"]){
-      currentPage++;
+  Future<List<SeriesItem>> fetchSeries(CancelToken cancelToken, {bool? pagination}) async {
+    if(pagination!=null){
+      _isLoading = false;
     }
-    return lista;
+    print("siguiente búsqueda");
+    print(currentPage);
+    if(!_isLoading) {
+      _isLoading = true;
+      print(currentPage);
+      final _response = await ApiClient.get(
+          "/tv/popular?page=$currentPage",
+          cancelToken: cancelToken);
+      print("asd");
+      final _responseString = _response.toString();
+      final json = jsonDecode(_responseString);
+      print(json["results"][0]);
+      json["results"].forEach((serie) {
+        if (!lista.contains(serie)) {
+          lista.add(SeriesItem.fromJson(serie));
+        }
+      });
+      print(lista.length);
+      ref.read(repoState.notifier).state = lista.length;
+      if (currentPage < json["total_pages"]) {
+        currentPage++;
+      }
+      return lista;
+    }
+    return [];
   }
 
   ///Get item detail by ID
