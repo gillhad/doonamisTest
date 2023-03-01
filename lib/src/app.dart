@@ -17,6 +17,15 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: AppRouter.generateRoute,
       initialRoute: NavigationRoutes.login,
       theme: AppStyles.getAppTheme(context),
+      localizationsDelegates: <LocalizationsDelegate<Object>>[
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: <Locale>[
+        Locale('en', 'US'), // English
+        Locale('he', 'IL'), // Hebrew
+        // ... other locales the app supports
+      ],
     );
   }
 }
