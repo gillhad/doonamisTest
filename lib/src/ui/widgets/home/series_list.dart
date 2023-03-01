@@ -15,9 +15,8 @@ class ListaSeries extends ConsumerStatefulWidget {
 
   class ListaSeriesState extends ConsumerState<ListaSeries>{
 
-  List<SeriesItem>? _series = [];
+  // List<SeriesItem>? _series = [];
   String currentPage = "1";
-  final _scrollController = RefreshController();
   bool _infoRead = false;
 
   static final seriesOptions = FutureProvider.autoDispose<List<SeriesItem>>((ref) async{
@@ -33,22 +32,19 @@ class ListaSeries extends ConsumerStatefulWidget {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(SeriesRepository.repoState, (previous, next) {
-      print("hay cambios");
-    });
-
+    // ref.listen(SeriesRepository.repoState, (previous, next) {
+    // });
     if (!_infoRead) {
       _infoRead = true;
-      print(_infoRead);
       ref.watch(seriesRepository).fetchSeries(CancelToken());
     }
-
-    ref.listen(seriesOptions, (previous, next) async {
-      _series = ref
-          .watch(seriesRepository)
-          .lista;
-      print("???");
-    });
+    //
+    // ref.listen(seriesOptions, (previous, next) async {
+    //   _series = ref
+    //       .watch(seriesRepository)
+    //       .lista;
+    //   print("???");
+    // });
 
     return ListView.separated(
       padding: EdgeInsets.symmetric(vertical: 8),

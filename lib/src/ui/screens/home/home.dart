@@ -3,11 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sillicon_films/src/config/app_lozalizations.dart';
+import 'package:sillicon_films/src/config/navigation/globals.dart';
 import 'package:sillicon_films/src/models/item_info.dart';
 import 'package:sillicon_films/src/models/movie_genre.dart';
 import 'package:sillicon_films/src/ui/widgets/home/series_list.dart';
-
-import '../../../config/app_styles.dart';
 
 
 class Home extends ConsumerWidget  {
@@ -50,14 +50,16 @@ final _refresherController = RefreshController();
 
       });
     return Scaffold(
-      appBar: _appBar(),
+      appBar: _appBar(context),
       body: _content(context, ref),
     );
   }
 
-  AppBar _appBar(){
+  AppBar _appBar(BuildContext context){
+    print("context");
+    print(context);
     return AppBar(
-      title: Text("Listado de peliculas"),
+       title: Text(AppLocalizations.of(context)!.getString("serie_list")!),
     );
   }
 
@@ -103,11 +105,4 @@ ref.listen(ListaSeriesState.seriesOptions, (previous, next) {
 
   }
 
-  _scrollListener(){
-    print("hola");
-
-
-
-
-  }
 }

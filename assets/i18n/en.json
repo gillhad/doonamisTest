@@ -1,3 +1,22 @@
 {
-  "film_list": "Listado de películas"
+  "serie_list": "Show list",
+  "serie_detail": "Show detail",
+  "popularity": "Popularity",
+  "votes": "Votes",
+  "name": "Name",
+  "original_name": "Original name",
+  "genres": "Genre",
+  "summary": "Summary",
+  "seasons_lenght": "Number of seasons",
+  "episodes_lenght": "Number of episodes",
+  "original_language": "Original language",
+  "in_production": "In production",
+  "created_by": "Crated by",
+  "last_chapter": "Last chapter",
+  "next_chapter": "Next chapter",
+  "last_air_apisode": "Last chapter air date",
+  "yes": "Yes",
+  "finished": "Finished"
+
+
 }

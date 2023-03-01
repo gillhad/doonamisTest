@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sillicon_films/src/config/app_lozalizations.dart';
 import 'package:sillicon_films/src/config/app_styles.dart';
 import 'package:sillicon_films/src/models/item_info.dart';
 
@@ -22,14 +23,14 @@ class ItemDetail extends ConsumerWidget {
 @override
 Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: _appBar(),
+      appBar: _appBar(context),
       body:  _content(context,ref),
     );
   }
 
-  AppBar _appBar(){
+  AppBar _appBar(context){
     return AppBar(
-      title: Text("Detalle de la serie"),
+      // title: Text(AppLocalizations.of(context)!.getString("serie_detail")!),
       centerTitle: false,
     );
   }
@@ -95,12 +96,12 @@ Widget build(BuildContext context, WidgetRef ref) {
           ],),
         ),
         Row(children: [
-          Text("Votos: "),
+          Text("${AppLocalizations.of(context)!.getString("votes")!}: "),
           Text(itemInfo.voteCount.toString(), style: AppStyles.textTheme.bodyLarge,)
         ],),
         Row(
           children: [
-            Text("Popularidad: "),
+            Text("${AppLocalizations.of(context)!.getString("popularity")!}: "),
             Text(itemInfo.popularity.toString(),style: AppStyles.textTheme.bodyLarge)
           ],
         )
@@ -111,18 +112,20 @@ Widget build(BuildContext context, WidgetRef ref) {
   Widget _serieInfo(context){
     return Column(
       children: [
-        infoCard("Nombre", itemInfo.name ?? "", context),
-        infoCard("Nombre original", itemInfo.originalName ?? "", context),
-        infoCard("Géneros", itemInfo.genreList.fold("", (value, genre) => value + "${genre.name},"), context),
-        infoCard("Resumen", itemInfo.overview ?? "", context),
-        infoCard("Numero de temporadas", itemInfo.numberSeasons.toString(), context),
-        infoCard("Numero de episodios", itemInfo.numberEpisodes.toString(), context),
-        infoCard("Idioma original", itemInfo.originalLanguage ?? "", context),
-        infoCard("En producción", itemInfo.inProduction! ? "Si" : "Acabada", context),
-        infoCard("Creadores", itemInfo.createdBy.fold("", (value, element) => value+"${element.name},"), context),
-        infoCard("Últimno capítulo", itemInfo.lastEpisodeToAir ?? "", context),
-        itemInfo.nextEpisode!=null ? infoCard("Próximo capítulo", itemInfo.nextEpisode!, context) : Container(),
-        infoCard("Fecha del último capitulo", itemInfo.lastAirDate!, context)
+        infoCard(AppLocalizations.of(context)!.getString("name")!, itemInfo.name ?? "", context),
+        infoCard(AppLocalizations.of(context)!.getString("original_name")!, itemInfo.originalName ?? "", context),
+        infoCard(AppLocalizations.of(context)!.getString("genres")!, itemInfo.genreList.fold("", (value, genre) => value + "${genre.name},"), context),
+        infoCard(AppLocalizations.of(context)!.getString("summary")!, itemInfo.overview ?? "", context),
+        infoCard(AppLocalizations.of(context)!.getString("seasons_lenght")!, itemInfo.numberSeasons.toString(), context),
+        infoCard(AppLocalizations.of(context)!.getString("episodes_lenght")!, itemInfo.numberEpisodes.toString(), context),
+        infoCard(AppLocalizations.of(context)!.getString("original_language")!, itemInfo.originalLanguage ?? "", context),
+        infoCard(AppLocalizations.of(context)!.getString("in_production")!, itemInfo.inProduction!
+            ? AppLocalizations.of(context)!.getString("yes")!
+            : AppLocalizations.of(context)!.getString("finished")!, context),
+        infoCard(AppLocalizations.of(context)!.getString("created_by")!, itemInfo.createdBy.fold("", (value, element) => value+"${element.name},"), context),
+        infoCard(AppLocalizations.of(context)!.getString("last_chapter")!, itemInfo.lastEpisodeToAir ?? "", context),
+        itemInfo.nextEpisode!=null ? infoCard(AppLocalizations.of(context)!.getString("next_chapter")!, itemInfo.nextEpisode!, context) : Container(),
+        infoCard(AppLocalizations.of(context)!.getString("last_air_apisode")!, itemInfo.lastAirDate!, context)
       ],
     );
   }

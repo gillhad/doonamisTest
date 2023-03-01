@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sillicon_films/src/config/app_lozalizations.dart';
 import 'package:sillicon_films/src/config/app_styles.dart';
+import 'package:sillicon_films/src/config/navigation/globals.dart';
 import 'package:sillicon_films/src/config/navigation/navigator_router.dart';
 import 'package:sillicon_films/src/config/navigation/navigator_routes.dart';
 
@@ -14,16 +17,18 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       onGenerateRoute: AppRouter.generateRoute,
       initialRoute: NavigationRoutes.home,
       theme: AppStyles.getAppTheme(context),
       localizationsDelegates: <LocalizationsDelegate<Object>>[
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: <Locale>[
         Locale('en', 'US'), // English
-        Locale('he', 'IL'), // Hebrew
+        Locale('es', 'ES'),
         // ... other locales the app supports
       ],
     );

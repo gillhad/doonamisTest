@@ -8,7 +8,6 @@ import 'package:sillicon_films/src/config/arguments.dart';
 import 'package:sillicon_films/src/config/navigation/navigator_routes.dart';
 import 'package:sillicon_films/src/models/item_info.dart';
 import 'package:sillicon_films/src/models/movie_genre.dart';
-import 'package:sillicon_films/src/ui/screens/home/home.dart';
 
 class SeriesCard extends ConsumerWidget {
   SeriesItem itemInfo;

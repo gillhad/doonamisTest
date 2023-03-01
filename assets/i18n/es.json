@@ -1,0 +1,22 @@
+{
+  "serie_list": "Listado de películas",
+  "serie_detail": "Detalle de la serie",
+  "popularity": "Popularidad",
+  "votes": "votos",
+  "name": "Nombre",
+  "original_name": "Nombre original",
+  "genres": "Géneros",
+  "summary": "Resumen",
+  "seasons_lenght": "Número de temporadas",
+  "episodes_lenght": "Número de episodios",
+  "original_language": "Idioma original",
+  "in_production": "En producctión",
+  "created_by": "Creadores",
+  "last_chapter": "Último episodio",
+  "next_chapter": "Próximo episodio",
+  "last_air_apisode": "Fecha del úlitmo episodio",
+  "yes": "Si",
+  "finished": "Acabada"
+
+
+}

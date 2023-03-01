@@ -123,7 +123,6 @@ print( json["last_episode_to_air"]);
   langauges = json["langauges"];
   lastAirDate = json["last_air_date"];
   lastEpisodeToAir = json["last_episode_to_air"]["name"];
-  print(json["number_of_episodes"]);
   numberEpisodes = json["number_of_episodes"];
   numberSeasons = json["number_of_seasons"];
   originalName = json["original_name"];
@@ -147,17 +146,6 @@ class CreatedBy{
 }
 
 
-class SeriesListResponse extends StateNotifier<List<SeriesItem>>{
-   late int totalCount;
-   late List<SeriesItem> seriesList;
-  SeriesListResponse({required this.totalCount,required this.seriesList}):super([]);
-
-  SeriesListResponse.fromJson(Map<String,dynamic> json):super([]){
-    totalCount = json["totalCount"];
-    seriesList = json["seriesList"];
-  }
-
-}
 
  final seriesRepository = Provider(SeriesRepository.new);
 
@@ -186,24 +174,18 @@ class SeriesRepository extends StateNotifier<int>{
     if(pagination!=null){
       _isLoading = false;
     }
-    print("siguiente búsqueda");
-    print(currentPage);
     if(!_isLoading) {
       _isLoading = true;
-      print(currentPage);
       final _response = await ApiClient.get(
           "/tv/popular?page=$currentPage",
           cancelToken: cancelToken);
-      print("asd");
       final _responseString = _response.toString();
       final json = jsonDecode(_responseString);
-      print(json["results"][0]);
       json["results"].forEach((serie) {
         if (!lista.contains(serie)) {
           lista.add(SeriesItem.fromJson(serie));
         }
       });
-      print(lista.length);
       ref.read(repoState.notifier).state = lista.length;
       if (currentPage < json["total_pages"]) {
         currentPage++;
