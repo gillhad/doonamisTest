@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sillicon_films/src/config/app_styles.dart';
 import 'package:sillicon_films/src/config/arguments.dart';
@@ -20,10 +21,16 @@ class SeriesCard extends ConsumerWidget {
 
   String genres = "";
 
-
+  double width = 300;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (MediaQuery.of(context).orientation == Orientation.portrait) {
+      width = MediaQuery.of(context).size.width;
+    }else{
+      width = MediaQuery.of(context).size.width/2;
+    }
+    print(width);
     _genreList = ref.watch(repositoryGenreProvider).genreList;
 
     return GestureDetector(
@@ -36,7 +43,7 @@ class SeriesCard extends ConsumerWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 8),
             height: 100,
-            width: MediaQuery.of(context).size.width,
+            width: width,
             decoration: BoxDecoration(color: AppStyles.primaryContainer,
               borderRadius: BorderRadius.circular(15)
             ),
@@ -56,14 +63,14 @@ class SeriesCard extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                        width: MediaQuery.of(context).size.width*.6,
+                        width: width*.6,
                         child: Text(itemInfo.name,style: AppStyles.textTheme.titleMedium,)),
                     SizedBox(height: 5,),
                     ref.watch(repositoryGenreProvider).genreList.isNotEmpty ? Container(
-                        width: MediaQuery.of(context).size.width*.6,
+                        width: width*.6,
                         child: Text(getGenre(itemInfo.genreIds))) : Container(),
                     Container(
-                        width: MediaQuery.of(context).size.width*.6,
+                        width: width*.6,
                         child: Text(itemInfo.overview, overflow: TextOverflow.ellipsis,maxLines: 2,)),
                   ],
                 ),
@@ -102,7 +109,7 @@ getGenre(List<dynamic> list){
     }
     String concatenate = "";
     genreValue.forEach((element) {
-      concatenate = concatenate + element.name;
+      concatenate = concatenate +" "+ element.name;
     });
     return concatenate;
 }

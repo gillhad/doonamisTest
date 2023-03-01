@@ -4,6 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sillicon_films/src/connection/api_client.dart';
 
+import '../config/app_lozalizations.dart';
+import '../config/navigation/globals.dart';
+
 
 final repositoryGenreProvider = Provider(SeriesGenreRepository.new);
 
@@ -34,8 +37,10 @@ class SeriesGenreRepository extends StateNotifier<List<Genre>>{
   Future<List<Genre>> fetchGenre(
       CancelToken cancelToken
       ) async {
+
+    String language = AppLocalizations.of(navigatorKey.currentContext!)!.locale.toString();
      final _response = await ApiClient.get(
-    '/genre/tv/list', cancelToken: cancelToken
+    '/genre/tv/list?language=$language', cancelToken: cancelToken
     );
     
     List<Genre> list = [];

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sillicon_films/src/config/app_lozalizations.dart';
+import 'package:sillicon_films/src/config/navigation/globals.dart';
 import 'package:sillicon_films/src/connection/api_client.dart';
 import 'package:sillicon_films/src/models/movie_genre.dart';
 
@@ -176,8 +178,10 @@ class SeriesRepository extends StateNotifier<int>{
     }
     if(!_isLoading) {
       _isLoading = true;
+      String language = AppLocalizations.of(navigatorKey.currentContext!)!.locale.toString().substring(0,2);
+      print(language);
       final _response = await ApiClient.get(
-          "/tv/popular?page=$currentPage",
+          "/tv/popular?page=$currentPage&language=$language",
           cancelToken: cancelToken);
       final _responseString = _response.toString();
       final json = jsonDecode(_responseString);
