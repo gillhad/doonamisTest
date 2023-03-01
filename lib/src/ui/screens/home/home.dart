@@ -15,7 +15,6 @@ class Home extends ConsumerWidget  {
 
   List<Genre>? _genreList = [];
   List<SeriesItem>? _itemList = [];
-  final _scrollController = ScrollController();
 
   int _filterIndex = 0;
   final  genreOptions = FutureProvider.autoDispose<List<Genre>>((ref) async{
@@ -33,9 +32,7 @@ List<Genre> optionsSelecte = [];
 
   @override
   void initState() {
-    _scrollController.addListener(() {
-     _scrollListener();
-    });
+
   }
 
   @override
@@ -56,14 +53,15 @@ List<Genre> optionsSelecte = [];
 
   AppBar _appBar(){
     return AppBar(
-      title: Text("listado de peliculas"),
+      title: Text("Listado de peliculas"),
     );
   }
 
   Widget _content(BuildContext context, WidgetRef ref){
+
     return SingleChildScrollView(
-      controller: _scrollController,
       padding: EdgeInsets.symmetric(horizontal: 18),
+      //physics: NeverScrollableScrollPhysics(),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -92,9 +90,8 @@ List<Genre> optionsSelecte = [];
   }
 
   _scrollListener(){
-    if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
-     //next page
-    }
+    print("hola");
+
 
 
 

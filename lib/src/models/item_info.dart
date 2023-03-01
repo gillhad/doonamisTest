@@ -42,9 +42,7 @@ class SeriesItem {
     id = json["id"];
     backdropPath = json["backdrop_path"];
     voteAverage = json["vote_average"].toDouble();
-    print("a por los genres");
     genreIds = json["genre_ids"];
-    print("genres correctos");
     overview = json["overview"];
     firstAirDate = json["first_air_date"];
     originCountry = json["origin_country"];
@@ -52,7 +50,6 @@ class SeriesItem {
     voteCount = json["vote_count"];
     name = json["name"];
     originalName = json["original_name"];
-    print("genero el item");
   }
 
 
@@ -176,7 +173,6 @@ class SeriesRepository extends StateNotifier<List<SeriesItem>>{
   Future<List<SeriesItem>> fetchSeries(CancelToken cancelToken, {String? pagination}) async {
     final _response = await ApiClient.get("/tv/popular",queryParameter: {"page":pagination}, cancelToken: cancelToken);
     final _responseString= _response.toString();
-    print(_responseString);
     final json = jsonDecode(_responseString);
     json["results"].forEach((serie) {
       lista.add(SeriesItem.fromJson(serie));
@@ -193,7 +189,6 @@ class SeriesRepository extends StateNotifier<List<SeriesItem>>{
 
     final _response = await ApiClient.get("/tv/$id");
     String responseString = _response.toString();
-    print(_response);
     final json = jsonDecode(responseString);
     return SerieDetail.fromJson(json);
   }

@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sillicon_films/src/config/app_styles.dart';
 import 'package:sillicon_films/src/models/item_info.dart';
 
+import '../../widgets/home/info_card.dart';
+
 
 class ItemDetail extends ConsumerWidget {
   ItemDetail({required this.itemInfo,Key? key}) : super(key: key);
@@ -27,7 +29,10 @@ Widget build(BuildContext context, WidgetRef ref) {
   }
 
   AppBar _appBar(){
-    return AppBar();
+    return AppBar(
+      title: Text("Detalle de la serie"),
+      centerTitle: false,
+    );
   }
   Widget _content(context,ref){
     return SingleChildScrollView(
@@ -106,48 +111,23 @@ Widget build(BuildContext context, WidgetRef ref) {
   Widget _serieInfo(context){
     return Column(
       children: [
-        _infoCard("Nombre:", itemInfo.name ?? "", context),
-        _infoCard("Nombre original", itemInfo.originalName ?? "", context),
-        _infoCard("Géneros", itemInfo.genreList.fold("", (value, genre) => value + "${genre.name},"), context),
-        _infoCard("Resumen", itemInfo.overview ?? "", context),
-        _infoCard("Numero de temporadas", itemInfo.numberSeasons.toString(), context),
-        _infoCard("Numero de episodios", itemInfo.numberEpisodes.toString(), context),
-        _infoCard("Idioma original", itemInfo.originalLanguage ?? "", context),
-        _infoCard("En producción", itemInfo.inProduction! ? "Si" : "Acabada", context),
-        _infoCard("Creadores", itemInfo.createdBy.fold("", (value, element) => value+"${element.name},"), context),
-        _infoCard("Últimno capítulo", itemInfo.lastEpisodeToAir ?? "", context),
-        itemInfo.nextEpisode!=null ? _infoCard("Próximo capítulo", itemInfo.nextEpisode!, context) : Container(),
-        _infoCard("Fecha del último capitulo:", itemInfo.lastAirDate!, context)
+        infoCard("Nombre", itemInfo.name ?? "", context),
+        infoCard("Nombre original", itemInfo.originalName ?? "", context),
+        infoCard("Géneros", itemInfo.genreList.fold("", (value, genre) => value + "${genre.name},"), context),
+        infoCard("Resumen", itemInfo.overview ?? "", context),
+        infoCard("Numero de temporadas", itemInfo.numberSeasons.toString(), context),
+        infoCard("Numero de episodios", itemInfo.numberEpisodes.toString(), context),
+        infoCard("Idioma original", itemInfo.originalLanguage ?? "", context),
+        infoCard("En producción", itemInfo.inProduction! ? "Si" : "Acabada", context),
+        infoCard("Creadores", itemInfo.createdBy.fold("", (value, element) => value+"${element.name},"), context),
+        infoCard("Últimno capítulo", itemInfo.lastEpisodeToAir ?? "", context),
+        itemInfo.nextEpisode!=null ? infoCard("Próximo capítulo", itemInfo.nextEpisode!, context) : Container(),
+        infoCard("Fecha del último capitulo", itemInfo.lastAirDate!, context)
       ],
     );
   }
   
-  Widget _infoCard(String title, String value, context){
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 3),
-      padding: EdgeInsets.all(8),
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: AppStyles.primaryContainer
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("$title:",style: AppStyles.textTheme.labelLarge!.copyWith(color: AppStyles.onPrimaryContainer),),
-          SizedBox(width: 5,),
-          Flexible(child: Text(value, maxLines: 30,style: AppStyles.textTheme.bodyMedium!.copyWith(color: AppStyles.onPrimaryContainer),))
-        ],),
-    );
-  }
+
 
 
 }
-
-
-
-// List<Genre> genres = [];
-// var jsonGenres = json["genres"];
-// jsonGenres.forEach((genre){
-// genres.add(Genre.fromJson(genre));
-// });
